@@ -1,0 +1,4 @@
+.idea
+*.pyc
+statics/image
+statics/uploads

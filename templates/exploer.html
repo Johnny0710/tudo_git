@@ -1,0 +1,14 @@
+{% extends base.html %}
+
+{% block title %} Explore {% end %}
+
+{% block content %}
+    {% for i in range(1,5) %}
+    <a href="{{ '/post/{}'.format(i) }}">
+        <img src="{{ static_url('image/{}.jpg'.format(i)) }}" width="200px" height="150px">
+    </a>
+    {% end %}
+{% end %}
+
+
+
