@@ -1,4 +1,6 @@
 import os
+import hashlib
+
 from PIL import Image
 
 def get_images(path):
@@ -29,5 +31,15 @@ def create_thum(file_path):
     img = Image.open(file_path)
     img.thumbnail((200,200))
     img.save('{}/thumbnail/{}_200x200.{}'.format(path,img_split[0],img_split[1]))
+
+def hash_img_name(file_name):
+    """
+    生成文件名称的唯一名
+    :param file_name:
+    :return:
+    """
+    name_split = file_name.split('.')
+    new_name = hashlib.md5(name_split[0].encode()).hexdigest()+'.'+name_split[1]
+    return new_name
 
 

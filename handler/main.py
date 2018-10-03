@@ -1,5 +1,7 @@
-import tornado.web
 import  os
+import hashlib
+
+import tornado.web
 
 from utils import img
 
@@ -36,8 +38,9 @@ class UploadFileHandler(BaseHandler):
     """
     def get(self, *args, **kwargs):
         self.render('upload.html')
+
     def post(self, *args, **kwargs):
         res = self.request.files.get('newimg',None)
-        with open('./statics/uploads/{}'.format(res[0].filename),'wb') as img_file:
+        with open('./statics/uploads/{}'.format(img.hash_img_name(res[0].filename)),'wb') as img_file:
             img_file.write(res[0].body)
-            img.create_thum('./statics/uploads/{}'.format(res[0].filename))
+            img.create_thum('./statics/uploads/{}'.format(img.hash_img_name(res[0].filename)))
