@@ -4,8 +4,8 @@
 
 {% block content %}
     {% for i in files %}
-    <a href="{{ '/post/{}'.format(i) }}">
-        <img src="{{ static_url('uploads/{}'.format(i)) }}" width="200px" height="150px">
+    <a href="{{ '/post/{}'.format(i.replace('_200x200','')) }}">
+        <img src="{{ static_url('uploads/thumbnail/{}'.format(i)) }}" width="200px" height="150px">
     </a>
     {% end %}
 
