@@ -41,6 +41,11 @@ class UploadFileHandler(BaseHandler):
 
     def post(self, *args, **kwargs):
         res = self.request.files.get('newimg',None)
-        with open('./statics/uploads/{}'.format(img.hash_img_name(res[0].filename)),'wb') as img_file:
-            img_file.write(res[0].body)
-            img.create_thum('./statics/uploads/{}'.format(img.hash_img_name(res[0].filename)))
+
+        if res:
+            new_name = img.hash_name(res[0].filename)
+            with open('./statics/uploads/{}'.format(new_name),'wb') as img_file:
+                img_file.write(res[0].body)
+                img.create_thum('./statics/uploads/{}'.format(new_name))
+        else:
+            self.redirect(r'/upload')

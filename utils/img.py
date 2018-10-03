@@ -1,5 +1,6 @@
 import os
 import hashlib
+import datetime
 
 from PIL import Image
 
@@ -25,21 +26,22 @@ def create_thum(file_path):
     :param file_path:
     :return:
     """
-    path = file_path.split(r'/')
-    img_split = path[-1].split('.')
-    path = r'/'.join(path[0:-1])
+    path_split = os.path.split(file_path)   # 将路径与文件分开
+    img_split = path_split[-1].split('.')   #  提取文件名及扩展名
     img = Image.open(file_path)
     img.thumbnail((200,200))
-    img.save('{}/thumbnail/{}_200x200.{}'.format(path,img_split[0],img_split[1]))
+    img.save('{}/thumbnail/{}_200x200.{}'.format(path_split[0],img_split[0],img_split[1]))
 
-def hash_img_name(file_name):
+def hash_name(file_name):
     """
     生成文件名称的唯一名
     :param file_name:
     :return:
     """
     name_split = file_name.split('.')
-    new_name = hashlib.md5(name_split[0].encode()).hexdigest()+'.'+name_split[1]
+    new_name = str(datetime.datetime.now())+ name_split[0]
+    new_name = hashlib.md5(new_name.encode()).hexdigest()+'.'+name_split[1]
+    print(new_name)
     return new_name
 
 
