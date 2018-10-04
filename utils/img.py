@@ -1,6 +1,7 @@
 import os
 import hashlib
 import datetime
+import glob
 
 from PIL import Image
 
@@ -10,7 +11,9 @@ def get_images(path):
     :param path:
     :return:wir
     """
-    files = os.listdir(path)
+    # files = os.listdir(path)
+    files = glob.glob(path)
+
     return files
 
 # def create_thum(files_path):

@@ -2,15 +2,23 @@ import  os
 import hashlib
 
 import tornado.web
+from pycket.session import SessionMixin
 
 from utils import img
 
-class BaseHandler(tornado.web.RequestHandler):
-    pass
+class BaseHandler(tornado.web.RequestHandler,SessionMixin):
+    """
+    基础类,所有handler均继承至这里
+    2018年10月4日21:22:10  添加了 pycket
+    """
+    def get_current_user(self):
+        return self.session.get('username')
+
 
 class IndexHandler(BaseHandler):
+    @tornado.web.authenticated  # 登录验证装饰器
     def get(self):
-        self.render("index.html",files = os.listdir('./statics/uploads'))
+        self.render("index.html",files = img.get_images('./statics/uploads'))
 
 class ExploerHandler(BaseHandler):
     """
@@ -27,10 +35,6 @@ class PostHandler(BaseHandler):
         post_id_tr = post_id.replace('_200x200','')
         print(post_id_tr)
         self.render('post.html',post_id=post_id_tr)
-
-class LoginHandler(BaseHandler):
-    pass
-
 
 class UploadFileHandler(BaseHandler):
     """
@@ -49,3 +53,9 @@ class UploadFileHandler(BaseHandler):
                 img.create_thum('./statics/uploads/{}'.format(new_name))
         else:
             self.redirect(r'/upload')
+
+class ErrorHandler(BaseHandler):
+    def get(self,*args,**kwargs):
+        self.send_error(404)
+    def write_error(self, status_code, **kwargs):
+        self.render('error.html')

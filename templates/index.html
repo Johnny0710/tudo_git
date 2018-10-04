@@ -3,11 +3,13 @@
 {% block title %} Explore {% end %}
 
 {% block content %}
+    <div>欢迎回来:{{ current_user }}</div>
     {% for i in files %}
     <a href="{{ '/post/{}'.format(i) }}">
         <img src="{{ static_url('uploads/{}'.format(i)) }}" width="200px" height="150px">
     </a>
     {% end %}
+    <a href="/loginout">登出</a>
 
 {% end %}
 
