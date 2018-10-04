@@ -22,7 +22,7 @@ class LoginHandler(BaseHandler):
         else:
             self.redirect('/login')
 
-class SingnHandler(BaseHandler):
+class SignHandler(BaseHandler):
     pass
 
 class loginOutHandler(BaseHandler):
